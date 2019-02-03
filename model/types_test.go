@@ -32,6 +32,11 @@ func TestGoType(t *testing.T) {
 			want:   "float32",
 		},
 		{
+			name:   "Should generate money type",
+			pgType: TypeMoney,
+			want:   "float32",
+		},
+		{
 			name:   "Should generate float4 type",
 			pgType: TypeFloat4,
 			want:   "float32",
@@ -153,6 +158,11 @@ func TestGoSliceType(t *testing.T) {
 			want: "[]float32",
 		},
 		{
+			name: "Should generate money array",
+			args: args{TypeMoney, 1},
+			want: "[]float32",
+		},
+		{
 			name: "Should generate float4 array",
 			args: args{TypeFloat4, 1},
 			want: "[]float32",
@@ -238,6 +248,11 @@ func TestGoNullType(t *testing.T) {
 		{
 			name:   "Should generate numeric type",
 			pgType: TypeNumeric,
+			want:   "*float32",
+		},
+		{
+			name:   "Should generate money type",
+			pgType: TypeMoney,
 			want:   "*float32",
 		},
 		{
@@ -364,7 +379,7 @@ func TestGoImport(t *testing.T) {
 			name: "Should not generate import for simple type",
 			args: args{
 				pgTypes: []string{
-					TypeInt2, TypeInt4, TypeInt8, TypeNumeric, TypeFloat4, TypeFloat8, TypeBool, TypeText, TypeVarchar, TypeBpchar,
+					TypeInt2, TypeInt4, TypeInt8, TypeNumeric, TypeMoney, TypeFloat4, TypeFloat8, TypeBool, TypeText, TypeVarchar, TypeBpchar,
 				},
 			},
 			want: "",
@@ -405,7 +420,7 @@ func TestGoImport(t *testing.T) {
 			name: "Should generate sql import for nullable simple types avoiding pointer",
 			args: args{
 				pgTypes: []string{
-					TypeInt2, TypeInt4, TypeInt8, TypeNumeric, TypeFloat4, TypeFloat8, TypeBool, TypeText, TypeVarchar, TypeBpchar,
+					TypeInt2, TypeInt4, TypeInt8, TypeNumeric, TypeMoney, TypeFloat4, TypeFloat8, TypeBool, TypeText, TypeVarchar, TypeBpchar,
 				},
 				nullable:      true,
 				avoidPointers: true,
@@ -416,7 +431,7 @@ func TestGoImport(t *testing.T) {
 			name: "Should not generate sql import for nullable simple types",
 			args: args{
 				pgTypes: []string{
-					TypeInt2, TypeInt4, TypeInt8, TypeNumeric, TypeFloat4, TypeFloat8, TypeBool, TypeText, TypeVarchar, TypeBpchar,
+					TypeInt2, TypeInt4, TypeInt8, TypeNumeric, TypeMoney, TypeFloat4, TypeFloat8, TypeBool, TypeText, TypeVarchar, TypeBpchar,
 				},
 				nullable:      true,
 				avoidPointers: false,

@@ -21,6 +21,8 @@ const (
 	TypeInt8 = "int8"
 	// TypeNumeric is a postgres type
 	TypeNumeric = "numeric"
+	// TypeMoney is a postgres type
+	TypeMoney = "money"
 	// TypeFloat4 is a postgres type
 	TypeFloat4 = "float4"
 	// TypeFloat8 is a postgres type
@@ -64,6 +66,7 @@ var typeMapping = map[string]bool{
 	TypeInt4:        true,
 	TypeInt8:        true,
 	TypeNumeric:     true,
+	TypeMoney:       true,
 	TypeFloat4:      true,
 	TypeFloat8:      true,
 	TypeText:        true,
@@ -163,7 +166,7 @@ func GoSimpleType(pgType string) (types.Type, error) {
 		return types.Typ[types.Int], nil
 	case TypeInt8:
 		return types.Typ[types.Int64], nil
-	case TypeNumeric, TypeFloat4:
+	case TypeNumeric, TypeMoney, TypeFloat4:
 		return types.Typ[types.Float32], nil
 	case TypeFloat8:
 		return types.Typ[types.Float64], nil
@@ -221,7 +224,7 @@ func GoNullType(pgType string, avoidPointers bool) (types.Type, error) {
 		switch pgType {
 		case TypeInt2, TypeInt4, TypeInt8:
 			return sqlNullInt64{}, nil
-		case TypeNumeric, TypeFloat4, TypeFloat8:
+		case TypeNumeric, TypeMoney, TypeFloat4, TypeFloat8:
 			return sqlNullFloat64{}, nil
 		case TypeBool:
 			return sqlNullBool{}, nil
